@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Nạp Kim Cương</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;min-height:100vh;color:#fff;background:linear-gradient(135deg,#080a16,#281044)}
+.container{max-width:430px;margin:auto;padding:20px 15px 40px}.header{text-align:center;padding:10px 0 22px}.logo{font-size:55px}h1{margin:5px 0;font-size:28px}.header p{color:#aaa}.box{background:#ffffff12;border:1px solid #ffffff22;border-radius:22px;padding:20px;box-shadow:0 15px 40px #0007}
+label{display:block;margin:16px 0 7px;font-weight:bold}input{width:100%;padding:14px;border:0;border-radius:12px;outline:0;font-size:16px}
+.packages{display:grid;grid-template-columns:1fr 1fr;gap:10px}.package{padding:17px 7px;border:2px solid transparent;border-radius:16px;background:#ffffff0d;text-align:center;cursor:pointer}.package.selected{border-color:#ffd21c;background:#ffd21c18}.kc{font-size:23px;font-weight:bold}.price{margin-top:7px;color:#ffd21c;font-size:18px;font-weight:bold}
+.providers{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.provider{padding:12px 4px;border:2px solid transparent;border-radius:11px;background:#ffffff0d;text-align:center;cursor:pointer}.provider.selected{border-color:#ffd21c;background:#ffd21c18}
+button{width:100%;margin-top:22px;padding:16px;border:0;border-radius:13px;background:linear-gradient(90deg,#ffc400,#ff6200);color:#fff;font-size:18px;font-weight:bold;cursor:pointer}button:active{transform:scale(.98)}
+#result{display:none;margin-top:18px;padding:16px;border-radius:14px;background:#12351f;border:1px solid #39ed73;color:#a0ffb8;line-height:1.7}.notice{margin-top:18px;padding:13px;border-radius:12px;background:#ffffff0d;color:#aaa;font-size:12px;line-height:1.5;text-align:center}footer{text-align:center;color:#777;font-size:12px;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="container">
+<header class="header"><div class="logo">💎</div><h1>NẠP KIM CƯƠNG</h1><p>Nạp nhanh • Tiện lợi</p></header>
+<div class="box">
+<label>ID người chơi</label>
+<input id="uid" type="text" inputmode="numeric" placeholder="Nhập ID người chơi">
+
+<label>Chọn gói</label>
+<div class="packages">
+<div class="package selected" onclick="choosePackage(this,730,20000)"><div class="kc">💎 730 KC</div><div class="price">20.000đ</div></div>
+<div class="package" onclick="choosePackage(this,3500,50000)"><div class="kc">💎 3.500 KC</div><div class="price">50.000đ</div></div>
+</div>
+
+<label>Nhà mạng</label>
+<div class="providers">
+<div class="provider selected" onclick="chooseProvider(this,'Viettel')">Viettel</div>
+<div class="provider" onclick="chooseProvider(this,'VinaPhone')">VinaPhone</div>
+<div class="provider" onclick="chooseProvider(this,'MobiFone')">MobiFone</div>
+</div>
+
+<label>Mã thẻ</label>
+<input id="card" type="text" inputmode="numeric" placeholder="Nhập mã thẻ">
+
+<label>Serial</label>
+<input id="serial" type="text" inputmode="numeric" placeholder="Nhập serial">
+
+<button onclick="order()">NẠP NGAY</button>
+<div id="result"></div>
+<div class="notice">Phần thanh toán chưa kết nối với hệ thống thanh toán hoặc cấp kim cương chính thức. Không nhập thông tin thẻ thật.</div>
+</div>
+<footer>© 2026 Nạp Kim Cương</footer>
+</div>
+
+<script>
+let kc=730,price=20000,provider="Viettel";
+function choosePackage(el,newKC,newPrice){document.querySelectorAll(".package").forEach(x=>x.classList.remove("selected"));el.classList.add("selected");kc=newKC;price=newPrice}
+function chooseProvider(el,name){document.querySelectorAll(".provider").forEach(x=>x.classList.remove("selected"));el.classList.add("selected");provider=name}
+function order(){
+ const uid=document.getElementById("uid").value.trim();
+ const card=document.getElementById("card").value.trim();
+ const serial=document.getElementById("serial").value.trim();
+ if(!uid)return alert("Vui lòng nhập ID người chơi!");
+ if(!card||!serial)return alert("Vui lòng nhập thông tin thẻ!");
+ const id="ORDER-"+Date.now().toString().slice(-8);
+ const result=document.getElementById("result");
+ result.style.display="block";
+ result.innerHTML="✅ <b>ĐƠN HÀNG ĐÃ TẠO</b><br>━━━━━━━━━━━━<br>🆔 ID: <b>"+safe(uid)+"</b><br>💎 KC: <b>"+kc.toLocaleString("vi-VN")+"</b><br>💰 Giá: <b>"+price.toLocaleString("vi-VN")+"đ</b><br>📱 Nhà mạng: <b>"+safe(provider)+"</b><br>📋 Mã đơn: <b>"+id+"</b><br>⏳ Đang chờ xử lý";
+}
+function safe(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+</script>
+</body>
+</html>
