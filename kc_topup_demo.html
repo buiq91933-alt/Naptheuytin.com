@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KC TOPUP - Demo</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#070b18;color:#fff}
+header{padding:18px;text-align:center;background:linear-gradient(135deg,#6d28d9,#0284c7)}
+header h1{margin:0;font-size:28px}header p{margin:6px 0 0}
+.wrap{max-width:620px;margin:auto;padding:18px}.card{background:#111827;border:1px solid #263248;border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 10px 30px #0005}
+h2{font-size:20px;margin:0 0 15px}.label{display:block;margin:12px 0 7px;font-weight:bold}
+input{width:100%;padding:15px;border-radius:12px;border:1px solid #3b465c;background:#0b1220;color:#fff;font-size:16px;outline:none}
+.pack{display:grid;gap:12px}.item{padding:17px;border:2px solid #29364d;border-radius:15px;background:#101a2c;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.item.active{border-color:#22d3ee;background:#123047}.kc{font-size:21px;font-weight:bold;color:#67e8f9}.price{color:#facc15;font-weight:bold}
+button{width:100%;padding:16px;margin-top:18px;border:0;border-radius:13px;background:linear-gradient(90deg,#7c3aed,#06b6d4);color:#fff;font-size:18px;font-weight:bold;cursor:pointer}
+#result{display:none;margin-top:15px;padding:15px;border-radius:12px;background:#064e3b;line-height:1.7}
+.note{text-align:center;color:#94a3b8;font-size:13px;line-height:1.5;margin-top:12px}
+</style>
+</head>
+<body>
+<header><h1>💎 KC TOPUP</h1><p>Nạp kim cương nhanh chóng</p></header>
+<div class="wrap">
+<div class="card">
+<h2>🎮 Nhập ID người chơi</h2>
+<input id="id" placeholder="Nhập ID game của bạn">
+</div>
+<div class="card">
+<h2>💎 Chọn gói kim cương</h2>
+<div class="pack">
+<div class="item" onclick="choose(this,'500 KC','20.000đ')"><span class="kc">💎 500 KC</span><span class="price">20.000đ</span></div>
+<div class="item" onclick="choose(this,'3.050 KC','50.000đ')"><span class="kc">💎 3.050 KC</span><span class="price">50.000đ</span></div>
+</div>
+<input id="chosen" readonly placeholder="Chưa chọn gói" style="margin-top:14px">
+<button onclick="order()">⚡ TẠO ĐƠN DEMO</button>
+<div id="result"></div>
+<div class="note">Bản demo: không thu tiền, không yêu cầu mật khẩu và không cộng kim cương thật.</div>
+</div>
+</div>
+<script>
+let selected=null;
+function choose(el,kc,price){
+ document.querySelectorAll('.item').forEach(x=>x.classList.remove('active'));
+ el.classList.add('active'); selected={kc,price};
+ document.getElementById('chosen').value=kc+' - '+price;
+}
+function order(){
+ const id=document.getElementById('id').value.trim(), r=document.getElementById('result');
+ if(!id)return alert('Vui lòng nhập ID người chơi!');
+ if(!selected)return alert('Vui lòng chọn gói kim cương!');
+ r.style.display='block';
+ r.innerHTML='✅ <b>Đã tạo đơn DEMO</b><br>ID: '+id+'<br>Gói: '+selected.kc+'<br>Giá: '+selected.price;
+}
+</script>
+</body>
+</html>
